@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Educational Management System (LMS)
 
 **Aishwarya Vignan Educational Society**  
@@ -408,3 +409,7 @@ Technology provided by Ensafe Technologies Pvt Ltd.
 **Made with ❤️ by Ensafe Technologies Pvt Ltd**
 
 For questions or support, contact support@ensafe.tech
+=======
+# LMS_PORTAL
+Integrated Student–Teacher Learning Portal is a centralized web application designed to streamline academic interaction between students and teachers. It enables lesson sharing, assignment management, resource uploads, progress tracking, and seamless communication through a unified platform, and learning efficiency within educational institutions.
+>>>>>>> eb67b3ca924cd6634e82793fe1015c7513b402e4
