@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Logout - Educational Management System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .logout-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            padding: 60px 40px;
+            text-align: center;
+            max-width: 500px;
+            animation: slideDown 0.6s ease;
+        }
+
+        .logout-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .logout-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .logout-message {
+            font-size: 16px;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .logout-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border-left: 4px solid #00f2fe;
+            text-align: left;
+            font-size: 14px;
+            color: #2c3e50;
+        }
+
+        .logout-info p {
+            margin-bottom: 8px;
+        }
+
+        .logout-info strong {
+            color: #00f2fe;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-login {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            min-width: 150px;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(79, 172, 254, 0.4);
+        }
+
+        .btn-home {
+            background: #ecf0f1;
+            color: #2c3e50;
+            min-width: 150px;
+        }
+
+        .btn-home:hover {
+            background: #bdc3c7;
+        }
+
+        .footer-text {
+            margin-top: 30px;
+            font-size: 13px;
+            color: #95a5a6;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logout-container {
+                padding: 40px 20px;
+            }
+
+            .logout-title {
+                font-size: 24px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="logout-container">
+        <div class="logout-icon">👋</div>
+        <h1 class="logout-title">See You Soon, Student!</h1>
+        <p class="logout-message">You have been successfully logged out from the system.</p>
+
+        <div class="logout-info">
+            <p><strong>Session Ended:</strong> Your learning session has been securely terminated.</p>
+            <p><strong>Your Progress Saved:</strong> All your learning progress is preserved.</p>
+            <p><strong>Continue Learning:</strong> You can login again anytime to access your courses.</p>
+        </div>
+
+        <div class="button-group">
+            <a href="/" class="btn btn-login">🔐 Login Again</a>
+            <a href="/" class="btn btn-home">🏠 Home Page</a>
+        </div>
+
+        <p class="footer-text">
+            © 2024 Aishwarya Vignan Educational Society<br>
+            Powered by Ensafe Technologies Pvt Ltd
+        </p>
+    </div>
+</body>
+</html>

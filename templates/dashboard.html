@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LMS Portal - Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 200px;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 30px 20px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 40px;
+            color: #3498db;
+            letter-spacing: 1px;
+            text-align: center;
+        }
+
+        .nav-menu {
+            list-style: none;
+            margin-bottom: auto;
+        }
+
+        .nav-item {
+            margin-bottom: 10px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            color: #bdc3c7;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .nav-link:hover {
+            background-color: rgba(52, 152, 219, 0.2);
+            color: #3498db;
+        }
+
+        .nav-link.active {
+            background-color: #3498db;
+            color: white;
+        }
+
+        .nav-icon {
+            margin-right: 12px;
+            font-size: 18px;
+        }
+
+        .logout-section {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .logout-btn {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 12px 15px;
+            background-color: rgba(231, 76, 60, 0.1);
+            color: #e74c3c;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .logout-btn:hover {
+            background-color: rgba(231, 76, 60, 0.2);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 200px;
+            flex: 1;
+            padding: 0;
+        }
+
+        /* Header */
+        .header {
+            background-color: white;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border-bottom: 1px solid #e8eef5;
+        }
+
+        .header-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-info {
+            text-align: right;
+            font-size: 14px;
+        }
+
+        .user-name {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .user-id {
+            color: #7f8c8d;
+            font-size: 12px;
+        }
+
+        .logout-header-btn {
+            padding: 8px 16px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: background-color 0.3s ease;
+        }
+
+        .logout-header-btn:hover {
+            background-color: #2980b9;
+        }
+
+        /* Content Area */
+        .content {
+            padding: 40px;
+        }
+
+        .welcome-section {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .welcome-title {
+            font-size: 28px;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .welcome-text {
+            color: #7f8c8d;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .enrolled-course {
+            background-color: #ecf0f1;
+            padding: 15px 20px;
+            border-radius: 6px;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .course-label {
+            color: #7f8c8d;
+            font-weight: 500;
+        }
+
+        .course-name {
+            color: #2c3e50;
+            font-weight: 600;
+            margin-top: 5px;
+        }
+
+        /* Two Column Layout */
+        .content-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        /* Materials Section */
+        .materials-section {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-icon {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+
+        .search-box {
+            display: flex;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid #e8eef5;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .search-btn {
+            padding: 10px 15px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-btn:hover {
+            background-color: #2980b9;
+        }
+
+        .materials-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .materials-table thead {
+            border-bottom: 2px solid #e8eef5;
+        }
+
+        .materials-table th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: #7f8c8d;
+            font-size: 13px;
+            text-transform: uppercase;
+        }
+
+        .materials-table td {
+            padding: 15px;
+            border-bottom: 1px solid #ecf0f1;
+            color: #2c3e50;
+            font-size: 14px;
+        }
+
+        .download-btn {
+            padding: 8px 12px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .download-btn:hover {
+            background-color: #2980b9;
+        }
+
+        .material-count {
+            color: #7f8c8d;
+            font-size: 13px;
+            margin-top: 15px;
+            margin-bottom: 10px;
+        }
+
+        .pagination {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .pagination-btn {
+            padding: 6px 10px;
+            background-color: #ecf0f1;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .pagination-btn:hover {
+            background-color: #3498db;
+            color: white;
+        }
+
+        .pagination-btn.active {
+            background-color: #3498db;
+            color: white;
+        }
+
+        /* Announcements Section */
+        .announcements-section {
+            background-color: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            height: fit-content;
+        }
+
+        .announcement-item {
+            padding: 15px 0;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .announcement-item:last-child {
+            border-bottom: none;
+        }
+
+        .announcement-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: #f39c12;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .announcement-text {
+            color: #2c3e50;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .announcement-date {
+            color: #95a5a6;
+            font-size: 11px;
+            margin-top: 5px;
+            margin-left: 18px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .content-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .announcements-section {
+                height: auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 70px;
+                padding: 15px 10px;
+            }
+
+            .logo {
+                font-size: 12px;
+                margin-bottom: 30px;
+            }
+
+            .nav-link {
+                justify-content: center;
+                padding: 12px;
+            }
+
+            .nav-icon {
+                margin-right: 0;
+            }
+
+            .main-content {
+                margin-left: 70px;
+            }
+
+            .header {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">📚 LMS PORTAL</div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="/" class="nav-link active">
+                        <span class="nav-icon">🏠</span>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/courses" class="nav-link">
+                        <span class="nav-icon">📖</span>
+                        <span>Courses</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/profile" class="nav-link">
+                        <span class="nav-icon">👤</span>
+                        <span>My Profile</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/settings" class="nav-link">
+                        <span class="nav-icon">⚙️</span>
+                        <span>Settings</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="logout-section">
+                <button class="logout-btn">
+                    <span class="nav-icon">🚪</span>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <h1 class="header-title">Dashboard</h1>
+                <div class="header-right">
+                    <div class="user-info">
+                        <div class="user-name">Welcome, Nikshitha</div>
+                        <div class="user-id">ID: 190023</div>
+                    </div>
+                    <button class="logout-header-btn">Logout</button>
+                </div>
+            </header>
+
+            <!-- Content -->
+            <div class="content">
+                <!-- Welcome Section -->
+                <section class="welcome-section">
+                    <h2 class="welcome-title">Welcome, Nikshitha!</h2>
+                    <p class="welcome-text">Welcome to the Naan Mudhalvan LMS portal. Here you can access all your course materials.</p>
+                    <div class="enrolled-course">
+                        <div class="course-label">Enrolled Course:</div>
+                        <div class="course-name">Python Programming (CSE101)</div>
+                    </div>
+                </section>
+
+                <!-- Content Wrapper -->
+                <div class="content-wrapper">
+                    <!-- Materials Section -->
+                    <section class="materials-section">
+                        <h3 class="section-title">
+                            <span class="section-icon">📁</span>
+                            My Study Materials
+                        </h3>
+                        <div class="search-box">
+                            <input type="text" class="search-input" placeholder="Search...">
+                            <button class="search-btn">🔍</button>
+                        </div>
+                        <table class="materials-table">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th style="text-align: right;">Download ↑</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Python Basics.pdf</td>
+                                    <td style="text-align: right;">
+                                        <button class="download-btn">📥 Download PDF</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Advanced Python.pdf</td>
+                                    <td style="text-align: right;">
+                                        <button class="download-btn">📥 Download PDF</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Data Structures.pdf</td>
+                                    <td style="text-align: right;">
+                                        <button class="download-btn">📥 Download PDF</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Python Assignments.ppt</td>
+                                    <td style="text-align: right;">
+                                        <button class="download-btn">📥 Download PDF</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="material-count">Showing 4 out of 4 materials</div>
+                        <div class="pagination">
+                            <span>Page 1 of 1</span>
+                            <button class="pagination-btn active">1</button>
+                            <button class="pagination-btn">→</button>
+                            <button class="pagination-btn">»</button>
+                        </div>
+                    </section>
+
+                    <!-- Announcements Section -->
+                    <aside class="announcements-section">
+                        <h3 class="section-title">
+                            📢 Announcements
+                        </h3>
+                        <div class="announcement-item">
+                            <span class="announcement-dot"></span>
+                            <div class="announcement-text">Upcoming Exam on Python Programming - May 16, 2024</div>
+                            <div class="announcement-date">2 days ago</div>
+                        </div>
+                        <div class="announcement-item">
+                            <span class="announcement-dot"></span>
+                            <div class="announcement-text">Complete the Python coding assignment by May 10, 2024</div>
+                            <div class="announcement-date">5 days ago</div>
+                        </div>
+                        <div class="announcement-item">
+                            <span class="announcement-dot"></span>
+                            <div class="announcement-text">New course material available for Module 3</div>
+                            <div class="announcement-date">1 week ago</div>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

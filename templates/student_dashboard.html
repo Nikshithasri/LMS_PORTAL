@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - LMS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 200px;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 30px 20px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 40px;
+            color: #3498db;
+            letter-spacing: 1px;
+            text-align: center;
+        }
+
+        .nav-menu {
+            list-style: none;
+            margin-bottom: auto;
+        }
+
+        .nav-item {
+            margin-bottom: 10px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            color: #bdc3c7;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .nav-link:hover {
+            background-color: rgba(52, 152, 219, 0.2);
+            color: #3498db;
+        }
+
+        .nav-link.active {
+            background-color: #3498db;
+            color: white;
+        }
+
+        .nav-icon {
+            margin-right: 12px;
+            font-size: 18px;
+        }
+
+        .logout-section {
+            margin-top: auto;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .logout-btn {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 12px 15px;
+            background-color: rgba(231, 76, 60, 0.1);
+            color: #e74c3c;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .logout-btn:hover {
+            background-color: rgba(231, 76, 60, 0.2);
+        }
+
+        .main-content {
+            margin-left: 200px;
+            flex: 1;
+            padding: 0;
+        }
+
+        .header {
+            background-color: white;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border-bottom: 1px solid #e8eef5;
+        }
+
+        .header-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-info {
+            text-align: right;
+            font-size: 14px;
+        }
+
+        .user-name {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .user-id {
+            color: #7f8c8d;
+            font-size: 12px;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .welcome-section {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .welcome-title {
+            font-size: 28px;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .welcome-text {
+            color: #7f8c8d;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .enrolled-course {
+            background-color: #ecf0f1;
+            padding: 15px 20px;
+            border-radius: 6px;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .course-label {
+            color: #7f8c8d;
+            font-weight: 500;
+        }
+
+        .course-name {
+            color: #2c3e50;
+            font-weight: 600;
+            margin-top: 5px;
+        }
+
+        .materials-section {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-icon {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+
+        .materials-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .materials-table thead {
+            border-bottom: 2px solid #e8eef5;
+        }
+
+        .materials-table th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: #7f8c8d;
+            font-size: 13px;
+            text-transform: uppercase;
+        }
+
+        .materials-table td {
+            padding: 15px;
+            border-bottom: 1px solid #ecf0f1;
+            color: #2c3e50;
+            font-size: 14px;
+        }
+
+        .download-btn {
+            padding: 8px 12px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .download-btn:hover {
+            background-color: #2980b9;
+        }
+
+        .empty-message {
+            text-align: center;
+            padding: 40px;
+            color: #7f8c8d;
+        }
+
+        .logout-header-btn {
+            padding: 8px 16px;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 13px;
+            text-decoration: none;
+        }
+
+        .logout-header-btn:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo">📚 LMS PORTAL</div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="/student-dashboard" class="nav-link active">
+                        <span class="nav-icon">🏠</span>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/student-dashboard" class="nav-link">
+                        <span class="nav-icon">📖</span>
+                        <span>My Courses</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/student/profile-test" class="nav-link">
+                        <span class="nav-icon">👤</span>
+                        <span>My Profile</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="logout-section">
+                <a href="/auth/logout" class="logout-btn">
+                    <span class="nav-icon">🚪</span>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <h1 class="header-title">Dashboard</h1>
+                <div class="header-right">
+                    <div class="user-info">
+                        <div class="user-name">Welcome, {{ user_name }}</div>
+                        <div class="user-id">Student</div>
+                    </div>
+                    <a href="/auth/logout" class="logout-header-btn">Logout</a>
+                </div>
+            </header>
+
+            <div class="content">
+                <section class="welcome-section">
+                    <h2 class="welcome-title">Welcome, {{ user_name }}!</h2>
+                    <p class="welcome-text">Access your course materials here.</p>
+                    {% if course_name %}
+                    <div class="enrolled-course">
+                        <div class="course-label">Enrolled Course:</div>
+                        <div class="course-name">{{ course_name }}</div>
+                    </div>
+                    {% endif %}
+                </section>
+
+                <section class="materials-section">
+                    <h3 class="section-title">
+                        <span class="section-icon">📁</span>
+                        My Study Materials ({{ material_count }})
+                    </h3>
+                    {% if materials %}
+                    <table class="materials-table">
+                        <thead>
+                            <tr>
+                                <th>📄 Title</th>
+                                <th>📝 Description</th>
+                                <th>📤 Uploaded By</th>
+                                <th>📅 Date</th>
+                                <th>⚙️ Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for material in materials %}
+                            <tr>
+                                <td><strong>{{ material.title }}</strong></td>
+                                <td>{{ material.description|default('—') }}</td>
+                                <td>{{ material.teacher }}</td>
+                                <td>{{ material.uploaded_at }}</td>
+                                <td>
+                                    <a href="/materials/view/{{ material.id }}" class="download-btn" style="background: #3498db;">👁️ View</a>
+                                    <a href="/materials/download/{{ material.id }}" class="download-btn" style="background: #27ae60;">📥 Download</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                    <div class="empty-message">
+                        <p>📭 No materials available yet. Check back soon!</p>
+                    </div>
+                    {% endif %}
+                </section>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

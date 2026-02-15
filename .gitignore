@@ -1,0 +1,127 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+.venv
+env.bak/
+venv.bak/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+.sublime-project
+.sublime-workspace
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+lms_db_backup_*
+
+# Uploads
+static/uploads/materials/*
+static/uploads/profiles/*
+!static/uploads/materials/.gitkeep
+!static/uploads/profiles/.gitkeep
+
+# Logs
+*.log
+logs/
+*.pot
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Project specific
+config_local.py
+settings_local.py
+instance/
+.webassets-cache
+.env.production
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*~
+.#*
+
+# Dependencies
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Node (if used for frontend tools)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Backup files
+*.backup
+*.bck
+backup_*
+
+# Secrets
+secrets.json
+credentials.json
+
+# Cache
+.cache/
+__pycache__/
+.pytest_cache/
+
+# IDE specific
+.vscode/settings.json
+.idea/workspace.xml
+.idea/tasks.xml
+
+# OS specific
+.env.local
+.env.*.local
+
+# Security
+.ssh/
+*.pem
+*.key

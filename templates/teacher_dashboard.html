@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Dashboard - Course Management - LMS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 200px;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 30px 20px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 40px;
+            color: #3498db;
+            letter-spacing: 1px;
+            text-align: center;
+        }
+
+        .nav-menu {
+            list-style: none;
+            margin-bottom: auto;
+        }
+
+        .nav-item {
+            margin-bottom: 10px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            color: #bdc3c7;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .nav-link:hover {
+            background-color: rgba(52, 152, 219, 0.2);
+            color: #3498db;
+        }
+
+        .nav-link.active {
+            background-color: #3498db;
+            color: white;
+        }
+
+        .nav-icon {
+            margin-right: 12px;
+            font-size: 18px;
+        }
+
+        .logout-section {
+            margin-top: auto;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .logout-btn {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 12px 15px;
+            background-color: rgba(231, 76, 60, 0.1);
+            color: #e74c3c;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .logout-btn:hover {
+            background-color: rgba(231, 76, 60, 0.2);
+        }
+
+        .main-content {
+            margin-left: 200px;
+            flex: 1;
+            padding: 0;
+        }
+
+        .header {
+            background-color: white;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border-bottom: 1px solid #e8eef5;
+        }
+
+        .header-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-info {
+            text-align: right;
+            font-size: 14px;
+        }
+
+        .user-name {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .user-id {
+            color: #7f8c8d;
+            font-size: 12px;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .welcome-section {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .welcome-title {
+            font-size: 28px;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .welcome-text {
+            color: #7f8c8d;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .upload-section {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-icon {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            color: #2c3e50;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        input[type="text"],
+        input[type="file"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #e8eef5;
+            border-radius: 5px;
+            font-size: 14px;
+            font-family: inherit;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        input[type="text"]:focus,
+        input[type="file"]:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+        select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 20px;
+            padding-right: 40px;
+        }
+
+        .submit-btn {
+            padding: 12px 30px;
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background-color: #229954;
+        }
+
+        .materials-list {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .materials-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .materials-table thead {
+            border-bottom: 2px solid #e8eef5;
+        }
+
+        .materials-table th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: #7f8c8d;
+            font-size: 13px;
+            text-transform: uppercase;
+        }
+
+        .materials-table td {
+            padding: 15px;
+            border-bottom: 1px solid #ecf0f1;
+            color: #2c3e50;
+            font-size: 14px;
+        }
+
+        .delete-btn {
+            padding: 6px 10px;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .delete-btn:hover {
+            background-color: #c0392b;
+        }
+
+        .empty-message {
+            text-align: center;
+            padding: 40px;
+            color: #7f8c8d;
+        }
+
+        .logout-header-btn {
+            padding: 8px 16px;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 13px;
+            text-decoration: none;
+        }
+
+        .logout-header-btn:hover {
+            background-color: #c0392b;
+        }
+
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        .file-upload-area {
+            border: 2px dashed #3498db;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .file-upload-area:hover {
+            border-color: #2980b9;
+            background-color: #ecf0f1;
+        }
+
+        .file-upload-area.dragover {
+            border-color: #27ae60;
+            background-color: #d5f4e6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo">📚 LMS PORTAL</div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="/teacher-dashboard" class="nav-link active">
+                        <span class="nav-icon">🏠</span>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/teacher-dashboard" class="nav-link">
+                        <span class="nav-icon">📤</span>
+                        <span>Upload Materials</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/teacher/profile-test" class="nav-link">
+                        <span class="nav-icon">👤</span>
+                        <span>My Profile</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="logout-section">
+                <a href="/auth/logout" class="logout-btn">
+                    <span class="nav-icon">🚪</span>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <h1 class="header-title">Teacher Dashboard</h1>
+                <div class="header-right">
+                    <div class="user-info">
+                        <div class="user-name">Welcome, {{ user_name }}</div>
+                        <div class="user-id">Teacher</div>
+                    </div>
+                    <a href="/auth/logout" class="logout-header-btn">Logout</a>
+                </div>
+            </header>
+
+            <div class="content">
+                <section class="welcome-section">
+                    {% if course %}
+                    <h2 class="welcome-title">📖 {{ course.course_name }}</h2>
+                    <p class="welcome-text">Course Code: <strong>{{ course.course_code }}</strong></p>
+                    <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #ecf0f1;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                            <div>
+                                <div style="color: #7f8c8d; font-size: 12px;">📊 Materials Uploaded</div>
+                                <div style="font-size: 28px; font-weight: bold; color: #2c3e50;">{{ material_count }}</div>
+                            </div>
+                            <div>
+                                <div style="color: #7f8c8d; font-size: 12px;">✅ Status</div>
+                                <div style="font-size: 28px; font-weight: bold; color: #27ae60;">Active</div>
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <h2 class="welcome-title">Welcome, {{ user_name }}!</h2>
+                    <p class="welcome-text">No course assigned yet.</p>
+                    {% endif %}
+                </section>
+
+                <div class="success-message" id="successMsg">✓ Material uploaded successfully!</div>
+
+                <section class="upload-section">
+                    <h3 class="section-title">
+                        <span class="section-icon">📤</span>
+                        Upload Course Material
+                    </h3>
+                    <form id="uploadForm" enctype="multipart/form-data" method="POST">
+                        <div class="form-group">
+                            <label for="title">Material Title *</label>
+                            <input type="text" id="title" name="title" required placeholder="e.g., Chapter 1: Introduction to Python">
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea id="description" name="description" placeholder="Brief description of this material..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="fileType">File Type</label>
+                            <select id="fileType" name="fileType" onchange="updateFileAccept()">
+                                <option value="all">All Supported Files</option>
+                                <option value="pdf">📄 PDF Documents (.pdf)</option>
+                                <option value="docs">📝 Documents (.doc, .docx, .txt)</option>
+                                <option value="presentation">🎤 Presentations (.ppt, .pptx)</option>
+                                <option value="spreadsheet">📊 Spreadsheets (.xls, .xlsx)</option>
+                                <option value="images">🖼️ Images (.jpg, .png, .gif)</option>
+                                <option value="archives">📦 Archives (.zip)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="file">Upload File * (Drag & Drop or Click)</label>
+                            <div class="file-upload-area" id="fileUploadArea">
+                                <div style="text-align: center; padding: 40px 20px;">
+                                    <div style="font-size: 36px; margin-bottom: 10px;">📁</div>
+                                    <div style="font-size: 16px; color: #2c3e50; margin-bottom: 5px;">Drag and drop your file here</div>
+                                    <div style="font-size: 14px; color: #7f8c8d;">or click to browse</div>
+                                </div>
+                                <input type="file" id="file" name="file" required accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.zip,.txt,.jpg,.png,.gif" style="display: none;">
+                            </div>
+                            <div id="filePreview" style="margin-top: 15px; display: none; padding: 15px; background: #ecf0f1; border-radius: 5px;">
+                                <div style="font-size: 14px;"><strong>Selected File:</strong> <span id="fileName"></span></div>
+                                <div style="font-size: 12px; color: #7f8c8d; margin-top: 5px;"><strong>Size:</strong> <span id="fileSize"></span></div>
+                            </div>
+                            <div style="margin-top: 12px; font-size: 12px; color: #7f8c8d;">
+                                ✓ Supported: <strong>PDF</strong>, DOC, DOCX, PPT, PPTX, XLS, XLSX, ZIP, TXT, JPG, PNG, GIF (Max 50MB)
+                            </div>
+                        </div>
+                        <button type="submit" class="submit-btn">📤 Upload Material</button>
+                    </form>
+                </section>
+
+                <section class="materials-list">
+                    <h3 class="section-title">
+                        <span class="section-icon">📚</span>
+                        Uploaded Materials ({{ material_count }})
+                    </h3>
+                    {% if materials %}
+                    <table class="materials-table">
+                        <thead>
+                            <tr>
+                                <th>📄 Title</th>
+                                <th>📝 Description</th>
+                                <th>📅 Uploaded</th>
+                                <th>📥 Downloads</th>
+                                <th>⚙️ Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for material in materials %}
+                            <tr>
+                                <td><strong>{{ material.title }}</strong></td>
+                                <td>{{ material.description|default('—') }}</td>
+                                <td>{{ material.uploaded_at }}</td>
+                                <td>{{ material.downloads }}</td>
+                                <td>
+                                    <a href="/materials/view/{{ material.id }}" class="delete-btn" style="background: #3498db; cursor: pointer;">👁️ View</a>
+                                    <a href="/materials/download/{{ material.id }}" class="delete-btn" style="background: #27ae60; cursor: pointer;">📥 Download</a>
+                                    <button class="delete-btn" onclick="deleteMaterial({{ material.id }})">🗑️ Delete</button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                    <div class="empty-message">
+                        <p>📭 No materials uploaded yet. Start by uploading your first course material above!</p>
+                    </div>
+                    {% endif %}
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // File type configurations
+        const fileTypes = {
+            all: '.pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.zip,.txt,.jpg,.png,.gif',
+            pdf: '.pdf',
+            docs: '.doc,.docx,.txt',
+            presentation: '.ppt,.pptx',
+            spreadsheet: '.xls,.xlsx',
+            images: '.jpg,.png,.gif',
+            archives: '.zip'
+        };
+
+        // Update file accept attribute based on selected type
+        function updateFileAccept() {
+            const fileTypeSelect = document.getElementById('fileType');
+            const fileInput = document.getElementById('file');
+            const selectedType = fileTypeSelect.value;
+            fileInput.accept = fileTypes[selectedType];
+        }
+
+        // File upload area setup
+        const fileUploadArea = document.getElementById('fileUploadArea');
+        const fileInput = document.getElementById('file');
+
+        // Click to upload
+        fileUploadArea.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        // Drag over
+        fileUploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            fileUploadArea.classList.add('dragover');
+        });
+
+        // Drag leave
+        fileUploadArea.addEventListener('dragleave', () => {
+            fileUploadArea.classList.remove('dragover');
+        });
+
+        // Drop
+        fileUploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            fileUploadArea.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                fileInput.files = files;
+                showFilePreview(files[0]);
+            }
+        });
+
+        // File input change
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                showFilePreview(e.target.files[0]);
+            }
+        });
+
+        // Show file preview
+        function showFilePreview(file) {
+            const previewDiv = document.getElementById('filePreview');
+            const fileNameSpan = document.getElementById('fileName');
+            const fileSizeSpan = document.getElementById('fileSize');
+
+            fileNameSpan.textContent = file.name;
+            fileSizeSpan.textContent = (file.size / (1024 * 1024)).toFixed(2) + ' MB';
+            
+            previewDiv.style.display = 'block';
+        }
+
+        // Handle form submission
+        document.getElementById('uploadForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData(document.getElementById('uploadForm'));
+            const submitBtn = document.querySelector('.submit-btn');
+            const originalText = submitBtn.textContent;
+            
+            try {
+                submitBtn.textContent = '⏳ Uploading...';
+                submitBtn.disabled = true;
+
+                const response = await fetch('/teacher/upload-material', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    alert('✅ ' + data.message);
+                    document.getElementById('uploadForm').reset();
+                    document.getElementById('filePreview').style.display = 'none';
+                    // Reload page to show new material
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1000);
+                } else {
+                    alert('❌ Error: ' + data.message);
+                }
+            } catch (error) {
+                alert('❌ Upload failed: ' + error.message);
+            } finally {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
+        });
+
+        // Delete material
+        async function deleteMaterial(materialId) {
+            if (confirm('Are you sure you want to delete this material?')) {
+                try {
+                    const response = await fetch(`/teacher/delete-material/${materialId}`, {
+                        method: 'POST'
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        alert('✅ ' + data.message);
+                        location.reload();
+                    } else {
+                        alert('❌ ' + data.message);
+                    }
+                } catch (error) {
+                    alert('❌ Delete failed: ' + error.message);
+                }
+            }
+        }
+
+        // Show success message if redirected from upload
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('success') === '1') {
+            document.getElementById('successMsg').classList.add('show');
+            setTimeout(() => {
+                document.getElementById('successMsg').classList.remove('show');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

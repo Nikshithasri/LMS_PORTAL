@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Profile - Educational Management System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .profile-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        .profile-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .profile-header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .profile-content {
+            display: flex;
+            padding: 40px;
+        }
+
+        .photo-section {
+            flex: 0 0 300px;
+            text-align: center;
+            margin-right: 40px;
+            border-right: 2px solid #ecf0f1;
+            padding-right: 40px;
+        }
+
+        .profile-photo {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid #667eea;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .no-photo {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: #f0f0f0;
+            border: 5px solid #ddd;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+        }
+
+        .upload-btn {
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+            transition: background 0.3s ease;
+        }
+
+        .upload-btn:hover {
+            background: #764ba2;
+        }
+
+        #photoInput {
+            display: none;
+        }
+
+        .form-section {
+            flex: 1;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            color: #2c3e50;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #e8eef5;
+            border-radius: 5px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="tel"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-save {
+            background: #667eea;
+            color: white;
+            flex: 1;
+        }
+
+        .btn-save:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-cancel {
+            background: #ecf0f1;
+            color: #2c3e50;
+            flex: 1;
+        }
+
+        .btn-cancel:hover {
+            background: #bdc3c7;
+        }
+
+        .btn-dashboard {
+            background: #27ae60;
+            color: white;
+            flex: 1;
+        }
+
+        .btn-dashboard:hover {
+            background: #229954;
+        }
+
+        .message {
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            font-size: 14px;
+            color: #004085;
+        }
+
+        @media (max-width: 768px) {
+            .profile-content {
+                flex-direction: column;
+            }
+
+            .photo-section {
+                flex: 1;
+                border-right: none;
+                border-bottom: 2px solid #ecf0f1;
+                padding-right: 0;
+                padding-bottom: 30px;
+                margin-right: 0;
+                margin-bottom: 30px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+        }
+
+        .enrollments-section {
+            background: white;
+            border-top: 2px solid #ecf0f1;
+            padding: 40px;
+        }
+
+        .enrollments-section h3 {
+            color: #2c3e50;
+            font-size: 18px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .course-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .course-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .course-card h4 {
+            font-size: 16px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .course-info {
+            font-size: 13px;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .course-info p {
+            margin-bottom: 5px;
+        }
+
+        .no-enrollments {
+            text-align: center;
+            padding: 40px 20px;
+            color: #7f8c8d;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <div class="profile-header">
+            <h1>👨‍🎓 Student Profile</h1>
+            <p>Update your profile information</p>
+        </div>
+
+        <div class="profile-content">
+            <!-- Photo Section -->
+            <div class="photo-section">
+                {% if profile and profile.photo_path %}
+                    <img src="{{ profile.photo_path }}" alt="Profile Photo" class="profile-photo">
+                {% else %}
+                    <div class="no-photo">📷</div>
+                {% endif %}
+                <button class="upload-btn" onclick="document.getElementById('photoInput').click()">
+                    📤 Upload Photo
+                </button>
+                <input type="file" id="photoInput" accept="image/*">
+            </div>
+
+            <!-- Form Section -->
+            <div class="form-section">
+                {% if message %}
+                    <div class="message {% if message_type == 'success' %}success{% else %}error{% endif %}">
+                        {{ message }}
+                    </div>
+                {% endif %}
+
+                <div class="info-box">
+                    ℹ️ Keep your profile up to date for better communication and course management.
+                </div>
+
+                <form id="profileForm" method="POST" enctype="multipart/form-data">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Full Name *</label>
+                            <input type="text" id="name" name="name" value="{{ profile.name if profile else '' }}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="registerNumber">Register Number *</label>
+                            <input type="text" id="registerNumber" name="register_number" value="{{ profile.register_number if profile else '' }}" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Email ID *</label>
+                            <input type="email" id="email" name="email" value="{{ profile.email if profile else user_email }}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number *</label>
+                            <input type="tel" id="phone" name="phone" value="{{ profile.phone if profile else '' }}" placeholder="Enter 10-digit phone number" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="department">Department *</label>
+                            <input type="text" id="department" name="department" value="{{ profile.department if profile else '' }}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="courseDetails">Course Details *</label>
+                            <input type="text" id="courseDetails" name="course_details" value="{{ profile.course_details if profile else '' }}" placeholder="e.g., B.Tech CSE, Sem 5" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="bio">Bio</label>
+                        <textarea id="bio" name="bio" placeholder="Tell us about yourself...">{{ profile.bio if profile else '' }}</textarea>
+                    </div>
+
+                    <input type="hidden" id="photoPath" name="photo_path" value="">
+
+                    <div class="buttons">
+                        <button type="submit" class="btn btn-save">💾 Save Profile</button>
+                        <button type="button" class="btn btn-dashboard" onclick="window.location.href='/student-dashboard'">📊 Go to Dashboard</button>
+                        <button type="reset" class="btn btn-cancel">↻ Reset</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Enrollments Section -->
+        <div class="enrollments-section">
+            <h3>📚 Your Enrolled Courses</h3>
+            {% if enrollments and enrollments|length > 0 %}
+                <div class="course-list">
+                    {% for course in enrollments %}
+                    <div class="course-card">
+                        <h4>{{ course.course_name }}</h4>
+                        <div class="course-info">
+                            <p><strong>Enrollment Date:</strong> {{ course.enrollment_date }}</p>
+                            <p><strong>Status:</strong> {{ course.status }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="no-enrollments">
+                    <p>📭 You are not enrolled in any courses yet.</p>
+                    <p style="font-size: 12px; margin-top: 10px;">Contact your instructor to enroll in courses.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        // Photo upload handler
+        document.getElementById('photoInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    // Show preview
+                    const photoDiv = document.querySelector('.no-photo') || document.querySelector('.profile-photo').parentElement.querySelector('.no-photo');
+                    if (document.querySelector('.profile-photo')) {
+                        document.querySelector('.profile-photo').src = event.target.result;
+                    }
+                    
+                    // Store in hidden field
+                    document.getElementById('photoPath').value = file.name;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Form submission
+        document.getElementById('profileForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            
+            fetch('/student/profile', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('✅ Profile updated successfully!');
+                    location.reload();
+                } else {
+                    alert('❌ Error: ' + data.message);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>

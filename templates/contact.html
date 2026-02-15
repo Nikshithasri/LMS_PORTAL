@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - {{ org_name }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #003d82;
+            --secondary-blue: #0056b3;
+            --light-blue: #f8f9fa;
+        }
+        
+        body {
+            background-color: var(--light-blue);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .navbar {
+            background-color: var(--primary-blue);
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+        
+        .content {
+            padding: 50px 0;
+        }
+        
+        .contact-card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .contact-icon {
+            font-size: 2.5rem;
+            color: var(--primary-blue);
+            margin-bottom: 15px;
+        }
+        
+        .footer {
+            background-color: #1a1a1a;
+            color: #999;
+            padding: 40px 0;
+            text-align: center;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">{{ org_name }}</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <div class="container">
+            <h1>Contact Us</h1>
+            <p>Get in touch with us</p>
+        </div>
+    </div>
+
+    <div class="container content">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>{{ org_name }}</h3>
+                    <p><i class="fas fa-phone"></i> Phone: +91-XXXX-XXXXXX</p>
+                    <p><i class="fas fa-envelope"></i> Email: info@aves.edu</p>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>{{ tech_partner }}</h3>
+                    <p><i class="fas fa-phone"></i> Phone: +91-XXXX-XXXXXX</p>
+                    <p><i class="fas fa-envelope"></i> Email: support@ensafe.tech</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>© 2024 {{ org_name }}</p>
+            <p>Technology Partner: {{ tech_partner }}</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

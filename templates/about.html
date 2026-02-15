@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - {{ org_name }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #003d82;
+            --secondary-blue: #0056b3;
+            --light-blue: #f8f9fa;
+        }
+        
+        body {
+            background-color: var(--light-blue);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .navbar {
+            background-color: var(--primary-blue);
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+        
+        .content {
+            padding: 50px 0;
+        }
+        
+        .section {
+            margin: 40px 0;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        
+        .footer {
+            background-color: #1a1a1a;
+            color: #999;
+            padding: 40px 0;
+            text-align: center;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">{{ org_name }}</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/auth/">Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <div class="container">
+            <h1>About {{ org_name }}</h1>
+            <p>Excellence in Educational Technology</p>
+        </div>
+    </div>
+
+    <div class="container content">
+        <div class="section">
+            <h2><i class="fas fa-building"></i> Our Organization</h2>
+            <p>Aishwarya Vignan Educational Society is committed to providing quality education through innovative technology solutions. Our Learning Management System empowers educators and students to collaborate effectively in a digital environment.</p>
+        </div>
+
+        <div class="section">
+            <h2><i class="fas fa-handshake"></i> Technology Partner</h2>
+            <p><strong>Ensafe Technologies Pvt Ltd</strong> is our trusted technology partner, providing enterprise-grade solutions for educational institutions. With years of experience in digital transformation, we deliver secure, scalable, and user-friendly platforms.</p>
+        </div>
+
+        <div class="section">
+            <h2><i class="fas fa-star"></i> Our Mission</h2>
+            <p>To revolutionize education by providing accessible, secure, and innovative learning management solutions that bridge the gap between educators and students.</p>
+        </div>
+
+        <div class="section">
+            <h2><i class="fas fa-bullseye"></i> Our Vision</h2>
+            <p>To create an inclusive digital learning ecosystem where education transcends geographical boundaries and empowers learners globally.</p>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>© 2024 {{ org_name }}</p>
+            <p>Technology Partner: {{ tech_partner }}</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

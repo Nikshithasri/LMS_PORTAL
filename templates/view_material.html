@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Material - {{ material.title }}</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-left h1 {
+            font-size: 24px;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .header-info {
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+
+        .header-right {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .btn-back {
+            background-color: #95a5a6;
+            color: white;
+        }
+
+        .btn-back:hover {
+            background-color: #7f8c8d;
+        }
+
+        .btn-download {
+            background-color: #3498db;
+            color: white;
+        }
+
+        .btn-download:hover {
+            background-color: #2980b9;
+        }
+
+        .viewer {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            min-height: 600px;
+        }
+
+        .pdf-viewer {
+            width: 100%;
+            height: 700px;
+            border: 1px solid #e8eef5;
+            border-radius: 5px;
+        }
+
+        .metadata {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .metadata h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .metadata-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .metadata-item:last-child {
+            border-bottom: none;
+        }
+
+        .metadata-label {
+            color: #7f8c8d;
+            font-weight: 600;
+        }
+
+        .metadata-value {
+            color: #2c3e50;
+        }
+
+        .description {
+            background: #f8f9fa;
+            padding: 15px;
+            border-left: 4px solid #3498db;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        .no-pdf {
+            text-align: center;
+            padding: 40px;
+            color: #7f8c8d;
+        }
+
+        .file-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-left">
+                <h1>{{ material.title }}</h1>
+                <div class="header-info">
+                    📤 Uploaded by: <strong>{{ material.teacher }}</strong> on {{ material.uploaded_at }}
+                </div>
+            </div>
+            <div class="header-right">
+                <a href="/teacher-dashboard" class="btn btn-back">← Back to Dashboard</a>
+                <a href="/materials/download/{{ material.id }}" class="btn btn-download">📥 Download</a>
+            </div>
+        </div>
+
+        <div class="viewer">
+            {% if material.original_name.lower().endswith('.pdf') %}
+            <embed src="{{ material.file_path }}" type="application/pdf" class="pdf-viewer" />
+            {% elif material.original_name.lower().endswith(('.jpg', '.jpeg', '.png', '.gif')) %}
+            <div style="text-align: center;">
+                <img src="{{ material.file_path }}" style="max-width: 100%; height: auto; border-radius: 5px;" />
+            </div>
+            {% elif material.original_name.lower().endswith(('.doc', '.docx', '.xls', '.xlsx', '.ppt', '.pptx')) %}
+            <div class="no-pdf">
+                <div class="file-icon">📄</div>
+                <h3>{{ material.original_name }}</h3>
+                <p>This file type cannot be previewed directly in the browser.</p>
+                <a href="/materials/download/{{ material.id }}" class="btn btn-download" style="margin-top: 15px;">Download to view</a>
+            </div>
+            {% elif material.original_name.lower().endswith('.zip') %}
+            <div class="no-pdf">
+                <div class="file-icon">📦</div>
+                <h3>{{ material.original_name }}</h3>
+                <p>This is a compressed archive file.</p>
+                <a href="/materials/download/{{ material.id }}" class="btn btn-download" style="margin-top: 15px;">Download to extract</a>
+            </div>
+            {% else %}
+            <div class="no-pdf">
+                <div class="file-icon">📁</div>
+                <h3>{{ material.original_name }}</h3>
+                <p>Preview not available for this file type.</p>
+                <a href="/materials/download/{{ material.id }}" class="btn btn-download" style="margin-top: 15px;">Download</a>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="metadata">
+            <h3>Material Information</h3>
+            
+            {% if material.description %}
+            <div class="description">
+                <strong>Description:</strong><br>
+                {{ material.description }}
+            </div>
+            {% endif %}
+
+            <div class="metadata-item">
+                <span class="metadata-label">📄 File Name:</span>
+                <span class="metadata-value">{{ material.original_name }}</span>
+            </div>
+
+            <div class="metadata-item">
+                <span class="metadata-label">📤 Uploaded By:</span>
+                <span class="metadata-value">{{ material.teacher }}</span>
+            </div>
+
+            <div class="metadata-item">
+                <span class="metadata-label">📅 Upload Date:</span>
+                <span class="metadata-value">{{ material.uploaded_at }}</span>
+            </div>
+
+            <div class="metadata-item">
+                <span class="metadata-label">📥 Downloads:</span>
+                <span class="metadata-value">{{ material.downloads }}</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

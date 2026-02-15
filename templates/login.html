@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LMS - Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-container {
+            background: white;
+            padding: 50px;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 32px;
+        }
+
+        .title {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .role-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #ecf0f1;
+        }
+
+        .role-tab {
+            flex: 1;
+            padding: 12px;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            color: #7f8c8d;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .role-tab.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+
+        .role-tab:hover {
+            color: #667eea;
+        }
+
+        label {
+            display: block;
+            color: #2c3e50;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        input[type="email"],
+        input[type="password"],
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #e8eef5;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="email"]:focus,
+        input[type="password"]:focus,
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .error {
+            background-color: #fee;
+            color: #c33;
+            padding: 12px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .error.show {
+            display: block;
+        }
+
+        .form-content {
+            display: none;
+        }
+
+        .form-content.active {
+            display: block;
+        }
+
+        .demo-hint {
+            text-align: center;
+            color: #95a5a6;
+            font-size: 12px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #ecf0f1;
+        }
+
+        .demo-creds {
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-size: 12px;
+            color: #2c3e50;
+        }
+
+        .demo-creds div {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">📚</div>
+        <h1 class="title">LMS Portal</h1>
+        <p class="subtitle">Learning Management System</p>
+
+        <div class="role-tabs">
+            <button class="role-tab active" onclick="switchRole('student')">Student</button>
+            <button class="role-tab" onclick="switchRole('teacher')">Teacher</button>
+            <button class="role-tab" onclick="switchRole('admin')">Admin</button>
+        </div>
+
+        <div class="error" id="error"></div>
+
+        <!-- Student Login -->
+        <form id="student-form" class="form-content active" method="POST" action="/login">
+            <input type="hidden" name="role" value="student">
+            <div class="form-group">
+                <label for="student-email">📧 Email Address</label>
+                <input type="email" id="student-email" name="email" required placeholder="Enter your email">
+            </div>
+            <div class="form-group">
+                <label for="student-password">🔒 Password</label>
+                <input type="password" id="student-password" name="password" required placeholder="Enter your password">
+            </div>
+            <div class="form-group">
+                <label for="student-institution">🏫 Institution/Course</label>
+                <input type="text" id="student-institution" name="institution" placeholder="Your institution or course name">
+            </div>
+            <button type="submit">Login as Student</button>
+            <div class="demo-hint">Demo Credentials:
+                <div class="demo-creds">
+                    <div>📧 Email: student@lms.com</div>
+                    <div>🔒 Password: password123</div>
+                </div>
+            </div>
+        </form>
+
+        <!-- Teacher Login -->
+        <form id="teacher-form" class="form-content" method="POST" action="/login">
+            <input type="hidden" name="role" value="teacher">
+            <div class="form-group">
+                <label for="teacher-email">📧 Email Address</label>
+                <input type="email" id="teacher-email" name="email" required placeholder="Enter your email">
+            </div>
+            <div class="form-group">
+                <label for="teacher-password">🔒 Password</label>
+                <input type="password" id="teacher-password" name="password" required placeholder="Enter your password">
+            </div>
+            <div class="form-group">
+                <label for="teacher-department">🏢 Department</label>
+                <input type="text" id="teacher-department" name="department" placeholder="Your department name">
+            </div>
+            <button type="submit">Login as Teacher</button>
+            <div class="demo-hint">Demo Credentials:
+                <div class="demo-creds">
+                    <div>📧 Email: teacher@lms.com</div>
+                    <div>🔒 Password: password123</div>
+                </div>
+            </div>
+        </form>
+
+        <!-- Admin Login -->📧 Email Address</label>
+                <input type="email" id="admin-email" name="email" required placeholder="Enter your email">
+            </div>
+            <div class="form-group">
+                <label for="admin-password">🔒 Password</label>
+                <input type="password" id="admin-password" name="password" required placeholder="Enter your password">
+            </div>
+            <div class="form-group">
+                <label for="admin-organization">🌐 Organization</label>
+                <input type="text" id="admin-organization" name="organization" placeholder="Your organization name
+            </div>
+            <div class="form-group">
+                <label for="admin-password">Password</label>
+                <input type="password" id="admin-password" name="password" required placeholder="Enter your password">
+            </div>
+            <button type="submit">Login as Admin</button>
+            <div class="demo-hint">Demo Credentials:
+                <div class="demo-creds">
+                    <div>📧 Email: admin@lms.com</div>
+                    <div>🔒 Password: password123</div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function switchRole(role) {
+            // Hide all forms
+            document.querySelectorAll('.form-content').forEach(form => {
+                form.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.role-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected form
+            document.getElementById(role + '-form').classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+            
+            // Clear error message
+            document.getElementById('error').classList.remove('show');
+        }
+
+        // Show error if passed via URL
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('error')) {
+            const errorMsg = document.getElementById('error');
+            errorMsg.textContent = urlParams.get('error');
+            errorMsg.classList.add('show');
+        }
+    </script>
+</body>
+</html>
